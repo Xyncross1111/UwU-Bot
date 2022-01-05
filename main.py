@@ -2,10 +2,8 @@ import os
 import discord
 import random
 
-
+from host import host
 from discord.ext import commands
-
-
 
 
 bot = commands.Bot(command_prefix="!")
@@ -73,4 +71,4 @@ async def xyn(ctx):
 
 
 
-bot.run('OTIyMTExMTY4NjQwODY4NDAy.Yb8s8g.wYjkroXMRuyW1QiIBZRBapHHafM')
+bot.run('TOKEN')
