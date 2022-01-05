@@ -1,4 +1,4 @@
-#original code before swirching to cogs
+#original code before switching to cogs
 
 
 import os
