@@ -7,9 +7,10 @@ bot = commands
 class Moderation(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+
 #mute
     @bot.command(name='mute')
-    @commands.has_role("BotLevel3")
+    @commands.has_permissions(mute_members=True)
     async def mute(self, ctx, member: discord.Member):
         muted_role = discord.utils.get(ctx.guild.roles, name="Muted")
         if not muted_role:
@@ -30,10 +31,26 @@ class Moderation(commands.Cog):
         await ctx.send(embed=embed)
         await ctx.member.send('You have been muted')
 
+#add role
+    @bot.command(name='addrole')
+    @commands.has_permissions(manage_roles=True)
+    async def addrole(self, ctx, member: discord.Member, arg: str):
+      role = arg
+      await member.add_roles(role)
+      await ctx.send(f'Added role:{arg} to {member.name} ✅')
+
+#remove role
+    @bot.command(name='removerole')
+    @commands.has_permissions(manage_roles=True)
+    async def removerole(self, ctx, member: discord.Member, arg):
+      await member.remove_roles(arg)
+      await ctx.send(f'Added role:{arg} to {member.name} ✅')
+
+
 #unmute
 
     @bot.command(name='unmute')
-    @commands.has_role("BotLevel3")
+    @commands.has_permissions(mute_members=True)
     async def unmute(self, ctx, member: discord.Member):
         muted_role = discord.utils.get(ctx.guild.roles, name="Muted")
         await member.remove_roles(muted_role)
@@ -41,13 +58,15 @@ class Moderation(commands.Cog):
         embed = discord.Embed(title="Unmute",
                               description=f" Unmuted - {member.mention}",
                               colour=discord.Colour.blue())
+        embed.set_thumbnail(url=member.avatar_url)
+        embed.set_footer(f'Muted by {ctx.author.name}')
 
         await ctx.send(embed=embed)
 
 #purge
 
     @bot.command(alias=['p', 'purge'])
-    @commands.has_role('BotLevel2')
+    @commands.has_permissions(manage_messages=True)
     async def purge(self, ctx, no_=3):
         await ctx.channel.purge(limit=no_)
 
@@ -61,6 +80,7 @@ class Moderation(commands.Cog):
             title='Member Kicked',
             description=f'{member.mention} has been kicked from {ctx.guild}',
             color=0x5865F2)
+        embed.set_thumbnail(url=member.avatar_url)
         embed.set_footer(icon_url=ctx.author.avatar_url,
                          text=f'Executed by {ctx.author.name}')
         await ctx.send(embed=embed)
@@ -75,6 +95,7 @@ class Moderation(commands.Cog):
             title='Member Banned',
             description=f'{member.mention} has been Banned from {ctx.guild}',
             color=0x5865F2)
+        embed.set_thumbnail(url=member.avatar_url)
         embed.set_footer(icon_url=ctx.author.avatar_url,
                          text=f'Executed by {ctx.author.name}')
         await ctx.send(embed=embed)
@@ -96,15 +117,9 @@ class Moderation(commands.Cog):
             if (user.name, user.discriminator) == (member_name,
                                                    member_discriminator):
                 await ctx.guild.unban(user)
-                embed = discord.Embed(
-                    title='Member Unbanned',
-                    description=
-                    f'{member.mention} has been Unbanned from {ctx.guild}',
-                    color=0x5865F2)
-                embed.set_footer(icon_url=ctx.author.avatar_url,
-                                 text=f'Executed by {ctx.author.name}')
-                await ctx.send(embed=embed)
+                await ctx.send(f'{user.mention} has been unbanned from the server')
                 return
+
 
 
 #create a channel
@@ -120,6 +135,9 @@ class Moderation(commands.Cog):
             await guild.create_text_channel(channel_name)
             await ctx.send(f'{channel_name} has been created')
 
+
+#whois
+
     @bot.command()
     async def whois(self, ctx, member: discord.Member):
         embed = discord.Embed(title=member.name,
@@ -131,11 +149,15 @@ class Moderation(commands.Cog):
                          text=f'Requested by {ctx.author.name}')
         await ctx.send(embed=embed)
 
+#pfp/avatar
+
     @bot.command()
     async def av(self, ctx, member: discord.Member):
         embed = discord.Embed(color=discord.Color.Red())
         embed.set_image(url=member.avatar_url)
         await ctx.send(embed=embed)
+
+#error
 
     @bot.Cog.listener()
     async def on_command_error(self, ctx, error):
