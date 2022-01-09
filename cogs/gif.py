@@ -4,16 +4,6 @@ import random
 
 bot = commands
 
-gen_gifs = [
-    'https://tenor.com/view/rias-gremory-gif-19135269',
-    'https://tenor.com/view/wink-anime-gif-7784168',
-    'https://tenor.com/view/blush-rias-gremory-highschool-dxd-anime-cute-gif-17791241',
-    'https://tenor.com/view/riasgremory-funnyface-highschooldxd-wink-gif-8958138',
-    'https://tenor.com/view/rias-gremory-high-school-dxd-gremory-rias-anime-gif-18954869',
-    'https://tenor.com/view/rias-gremory-high-school-dxd-gremory-rias-gif-18954866',
-    'https://tenor.com/view/rias-rias-gremory-gif-18947895',
-    'https://tenor.com/view/rias-gremory-gif-19135277', ''
-]
 
 pickup_lines = [
     'I hope you know CPR, because you just took my breath away!',
@@ -56,24 +46,16 @@ pickup_lines = [
     'If you let me borrow a kiss, I promise I’ll give it right back.'
 ]
 
-pickup_starter = ["You're amazing", "Hello Beautiful", "You're breathtaking", "Hey Cutie"]
+pickup_starter = [
+    "You're amazing", "Hello Beautiful", "You're breathtaking", "Hey Cutie"
+]
+
 
 class Gif(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-#gen
 
-    @bot.command(name='gen', help=':why does this work but the other not ugh')
-    async def gen(self, ctx):
-        response = random.choice(gen_gifs)
-        await ctx.send(response)
-
-#ayuyu
-
-    @bot.command(name='ayuyu', help=':OOoOoOOooOoooOOOo')
-    async def ayuyu(self, ctx):
-        await ctx.send("https://tenor.com/view/ayuyu-gif-23227373")
 
 #woof
 
@@ -91,13 +73,6 @@ class Gif(commands.Cog):
             '*ya nya nya nya~! :3 kyakun-nya-nya, and a pyon-pyon-purrr-nyaa skyaaaaaaa~~~ nya-nya-meow-meow-purr-purr pyan, pyan!!!!*'
         )
 
-#pereb
-
-    @bot.command(name='pereb', help=':them fine legs')
-    async def pereb(self, ctx):
-        await ctx.send(
-            'https://tenor.com/view/spider-zhongli-spiderzhongli-gif-21689465')
-
 #slap
 
     @bot.command(name='slap', help=':you deserve a slap')
@@ -106,23 +81,17 @@ class Gif(commands.Cog):
             'https://tenor.com/view/slap-face-slap-smack-yo-slap-waifu-gif-20089821'
         )
 
+
 #zhong cop
+
     @bot.command(name='cop')
     async def cop(self, ctx):
-      embed = discord.Embed(color = discord.Color.red())
-      embed.set_image(url ='https://cdn.discordapp.com/attachments/926976896242188310/928324143986909254/SmartSelect_20220103-010703_TikTok.png')
-      await ctx.send(embed=embed)
-
-#monomi
-
-    @bot.command(name='monomi', help=':Why ask?')
-    async def monomi(self, ctx):
-        await ctx.send('https://imgur.com/gallery/bAFuNdh')
-
-    @bot.command(name='alli', help=':Im sleepy')
-    async def alli(self, ctx):
-        await ctx.send(
-            'https://tenor.com/view/ganyu-genshin-impact-cute-gif-24203853')
+        embed = discord.Embed(color=discord.Color.red())
+        embed.set_image(
+            url=
+            'https://cdn.discordapp.com/attachments/926976896242188310/928324143986909254/SmartSelect_20220103-010703_TikTok.png'
+        )
+        await ctx.send(embed=embed)
 
     @bot.command(name='shock', help=':Truly very shocking!')
     async def shock(self, ctx):
@@ -136,16 +105,13 @@ class Gif(commands.Cog):
             "You've worked hard today \nYou can Rest Now \nGoodnight and Sleep well"
         )
 
-    @bot.command(name='alli2', help='SO CUTE OMFG')
-    async def alli2(self, ctx):
-        await ctx.send(
-            "https://tenor.com/view/shy-bye-rabbit-bunny-fluff-gif-5340278")
-
     @bot.command(name='pickup', help='Sends a random pickup line')
     async def pickup(self, ctx):
         response1 = random.choice(pickup_lines)
         response2 = random.choice(pickup_starter)
-        embed = discord.Embed(title = response2 , description = response1 , color = discord.Color.red())
+        embed = discord.Embed(title=response2,
+                              description=response1,
+                              color=discord.Color.red())
         await ctx.send(embed=embed)
         await ctx.author.send(embed=embed)
 
